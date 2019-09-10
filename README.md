@@ -46,3 +46,25 @@ Open the app/views/welcome/index.html.erb file in your text editor.
 
 Rails can generate controllers which once run on the server will tell the next steps to display files.
 
+
+$ rails generate model Article title:string text:text
+
+this part makes the article model with a title and text attribute. 
+
+Once created the model we need to display it with the correct params 
+
+```
+  def create
+    @article = Article.new(article_params)
+
+    @article.save
+    redirect_to @article
+  end
+  private
+
+  def article_params
+    params.require(:article).permit(:title, :text)
+  end
+```
+
+Once that is done, the show from rails routes needs to be displayed, which is created in a file with a root - app/views/articles/show.html.erb
