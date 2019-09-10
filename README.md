@@ -68,3 +68,43 @@ Once created the model we need to display it with the correct params
 ```
 
 Once that is done, the show from rails routes needs to be displayed, which is created in a file with a root - app/views/articles/show.html.erb
+
+finally, we need to add links to navigate between pages. These are coded like example:
+``` 
+<%= link_to 'My Blog', controller: 'articles' %>
+```
+
+To validate the title we add to the article model -- 
+
+```
+
+class Article < ApplicationRecord
+  validates :title, presence: true,
+                    length: { minimum: 5 }
+end
+
+```
+
+With this step we integrate the render method into the controller. The render method is used so that the @article object is passed back to the new template when it is rendered. If you reload http://localhost:3000/articles/new and try to save an article without a title, Rails will send you back to the form, but that's not very useful. 
+
+we should add errors in the new articles pages. 
+
+```
+<% if @article.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@article.errors.count, "error") %> prohibited
+        this article from being saved:
+      </h2>
+      <ul>
+        <% @article.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+```
+
+
+
+
